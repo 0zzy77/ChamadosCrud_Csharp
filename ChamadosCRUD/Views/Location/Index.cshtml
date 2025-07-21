@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<ChamadosCRUD.Models.Location>
 @{
     ViewData["title"] = "Unidades";
 }
@@ -10,29 +10,55 @@
     <div class="col-2">
         <button type="button" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Adicionar</button>
     </div>
-    
 </div>
 <div class="row">
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Rua</th>
-                <th scope="col">Bairro</th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Id)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Name)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Rua)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Bairro)
+                </th>
                 <th scope="col">Chamados(total)</th>
                 <th scope="col">Chamados(pendentes)</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <th scope="row">-</th>
-                <th scope="row">-</th>
-                <th scope="row">-</th>
-                <th scope="row">-</th>
-                <th scope="row">-</th>
-            </tr>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Rua)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Bairro)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center"><h3>Não há dados cadastrados.</h3></td>
+                </tr>
+            }
+            
         </tbody>
     </table>
 </div>
