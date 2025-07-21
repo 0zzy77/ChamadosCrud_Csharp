@@ -1,4 +1,12 @@
+using ChamadosCRUD.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ChamadosCRUDContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("ChamadosCRUDContext") ?? throw new InvalidOperationException("Connection string 'ChamadosCRUDContext' not found.")
+        ));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

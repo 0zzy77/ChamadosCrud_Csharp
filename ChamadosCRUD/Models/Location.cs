@@ -8,7 +8,6 @@ namespace ChamadosCRUD.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Column(TypeName = "LONGTEXT")]
         public string? Description { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
