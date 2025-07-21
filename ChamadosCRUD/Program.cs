@@ -1,5 +1,6 @@
 using ChamadosCRUD.Data;
 using Microsoft.EntityFrameworkCore;
+using ChamadosCRUD.Models.Seeds;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,15 @@ builder.Services.AddDbContext<ChamadosCRUDContext>(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+//Configuração das seeds
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedLocation.Initialize(services);
+}
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
