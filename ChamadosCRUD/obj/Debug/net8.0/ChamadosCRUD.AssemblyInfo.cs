@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChamadosCRUD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c68029cdc85fcc7b291d5d092b079faef803e01")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9440e177a6b984e3357e9d1fc3826ef099ddb3d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChamadosCRUD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChamadosCRUD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
