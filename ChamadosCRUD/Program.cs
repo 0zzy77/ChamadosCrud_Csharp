@@ -20,6 +20,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     SeedLocation.Initialize(services);
+    SeedRole.Initialize(services);
 }
 
 
