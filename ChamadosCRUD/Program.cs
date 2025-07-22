@@ -21,6 +21,7 @@ using (var scope = app.Services.CreateScope())
 
     SeedLocation.Initialize(services);
     SeedRole.Initialize(services);
+    SeedStatusTicket.Initialize(services);
 }
 
 
