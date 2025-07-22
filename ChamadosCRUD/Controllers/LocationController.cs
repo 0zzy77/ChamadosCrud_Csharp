@@ -1,13 +1,14 @@
 ﻿
+using ChamadosCRUD.Data;
+using ChamadosCRUD.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ChamadosCRUD.Data;
-using ChamadosCRUD.Models;
 
 namespace ChamadosCRUD.Controllers
 {
@@ -20,6 +21,7 @@ namespace ChamadosCRUD.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
 

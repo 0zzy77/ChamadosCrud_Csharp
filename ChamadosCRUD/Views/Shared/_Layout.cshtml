@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow data-bs-theme="dark" mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow data-bs-theme=dark mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ChamadosCRUD</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -24,16 +24,45 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Index">Chamados</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Location" asp-action="Index">Unidades</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Ticket" asp-action="Index">Chamados</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Location" asp-action="Index">Unidades</a>
+                            </li>   
+                        }
+                        else
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login (Técnicos)</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
+                        
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="d-flex align-items-center ms-auto">
+                            <span class="navbar-text me-4">
+                                Olá, @User.Identity.Name!
+                            </span>
+
+                            <form method="post" asp-area="" asp-controller="Login" asp-action="Logout">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    Sair
+                                </button>
+                            </form>
+                        </div>
+                    }
+                    
+                    
+                    
                 </div>
             </div>
         </nav>
