@@ -18,6 +18,7 @@ namespace ChamadosCRUD.Data
         public DbSet<ChamadosCRUD.Models.Location> Location { get; set; } = default!;
         public DbSet<ChamadosCRUD.Models.Role> Role { get; set; } = default!;
         public DbSet<ChamadosCRUD.Models.StatusTicket> StatusTickets { get; set; } = default!;
+        public DbSet<ChamadosCRUD.Models.User> Users { get; set; } = default!;
 
     }
 }
