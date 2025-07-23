@@ -57,7 +57,7 @@ namespace ChamadosCRUD.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location");
+                    b.ToTable("Location", (string)null);
                 });
 
             modelBuilder.Entity("ChamadosCRUD.Models.Role", b =>
@@ -74,7 +74,7 @@ namespace ChamadosCRUD.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("ChamadosCRUD.Models.StatusTicket", b =>
@@ -91,7 +91,7 @@ namespace ChamadosCRUD.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusTickets");
+                    b.ToTable("StatusTickets", (string)null);
                 });
 
             modelBuilder.Entity("ChamadosCRUD.Models.User", b =>
@@ -132,7 +132,7 @@ namespace ChamadosCRUD.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ChamadosCRUD.Models.User", b =>

@@ -1,0 +1,48 @@
+﻿@model ChamadosCRUD.Models.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "Cadastro de usuário";
+}
+<div class="row">
+    <h2>Cadastro de usuários</h2>
+</div>
+<div class="row">
+    
+    <form asp-controller="User" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-6">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-6">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <!--<div class="col-6">
+            <label asp-for="RoleId" class="form-label"></label>
+            <input asp-for="RoleId" class="form-control">
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>-->
+        <div class="col-6">
+            <label asp-for="RoleId" class="form-label"></label>
+            <select asp-for="RoleId" asp-items="ViewBag.Roles" class="form-control">
+                <option value="">Selecione um cargo</option>
+            </select>
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

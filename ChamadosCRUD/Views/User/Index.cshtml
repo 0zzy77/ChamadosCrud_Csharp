@@ -8,7 +8,8 @@
 </div>
 <div class="row">
     <div class="col-2">
-        <button type="button" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Adicionar</button>
+        <!--<button type="button" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Adicionar</button>-->
+        <a class="btn btn-primary btn-sm" role="button" asp-area="" asp-controller="User" asp-action="Create"><i class="bi bi-plus-circle"></i> Adicionar</a>
     </div>
 </div>
 <div class="row">
@@ -61,8 +62,3 @@
         </tbody>
     </table>
 </div>
-<script>
-    var modelData = @Html.Raw(Json.Serialize(Model));
-    console.log("debug\n");
-    console.log(modelData);
-</script>
