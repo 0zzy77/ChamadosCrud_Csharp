@@ -7,6 +7,6 @@ namespace ChamadosCRUD.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }//caso precise fazer join inverso (pegar todos os usuários que utilizam determinado cargo)
     }
 }

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ChamadosCRUD.Models.ViewModels.UserViewModel>
+@{
+    ViewData["title"] = "Usuários";
+}
+
+<div class="row">
+    <h2>Usuários</h2>
+</div>
+<div class="row">
+    <div class="col-2">
+        <button type="button" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Adicionar</button>
+    </div>
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Id)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Name)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.Email)
+                </th>
+                <th scope="col">
+                    @Html.DisplayNameFor(Model => Model.RoleName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td scope="row">
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center"><h3>Não há dados cadastrados.</h3></td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+    var modelData = @Html.Raw(Json.Serialize(Model));
+    console.log("debug\n");
+    console.log(modelData);
+</script>
