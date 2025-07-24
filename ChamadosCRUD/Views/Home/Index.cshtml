@@ -54,4 +54,20 @@
     
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+    @section Scripts {
+
+    @if (TempData["Success"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Sucesso!',
+                    text: '@TempData["Success"]',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+        
+        
+    }
 </div>

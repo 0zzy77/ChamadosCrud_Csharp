@@ -46,6 +46,8 @@ namespace ChamadosCRUD.Controllers
 
                 _context.Add(ticket);
                 await _context.SaveChangesAsync();
+
+                TempData["Success"] = $"Chamado sob o protocolo {ticket.Id} enviado com sucesso.";
                 return RedirectToAction("Index", "Home");
             }
 
