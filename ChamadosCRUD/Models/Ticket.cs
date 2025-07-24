@@ -24,19 +24,18 @@ namespace ChamadosCRUD.Models
         public int LocationId { get; set; }//Location
         [ForeignKey("LocationId")]
         public Location Location { get; set; }
-        [Required]
         public int StatusTicketId { get; set; }//StatusTicket
         [ForeignKey("StatusTicketId")]
-        public StatusTicket Status { get; set; }
-        [Required]
-        public int AssignedToId { get; set; }//User
+        public StatusTicket? Status { get; set; }
+        public int? AssignedToId { get; set; }//User
         [ForeignKey("AssignedToId")]
-        public User AssignedTo { get; set; }
+        public User? AssignedTo { get; set; }
 
         public Ticket()
         {
             CreatedAt = DateTime.Now.ToUniversalTime();
             UpdatedAt = DateTime.Now.ToUniversalTime();
+            StatusTicketId = 1;
         }
     }
 }

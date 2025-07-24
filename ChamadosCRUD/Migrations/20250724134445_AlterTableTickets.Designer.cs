@@ -3,6 +3,7 @@ using System;
 using ChamadosCRUD.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChamadosCRUD.Migrations
 {
     [DbContext(typeof(ChamadosCRUDContext))]
-    partial class ChamadosCRUDContextModelSnapshot : ModelSnapshot
+    [Migration("20250724134445_AlterTableTickets")]
+    partial class AlterTableTickets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,7 +130,7 @@ namespace ChamadosCRUD.Migrations
                     b.Property<string>("RequesterPhone")
                         .HasColumnType("text");
 
-                    b.Property<int>("StatusTicketId")
+                    b.Property<int?>("StatusTicketId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -204,9 +207,7 @@ namespace ChamadosCRUD.Migrations
 
                     b.HasOne("ChamadosCRUD.Models.StatusTicket", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusTicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatusTicketId");
 
                     b.Navigation("AssignedTo");
 
