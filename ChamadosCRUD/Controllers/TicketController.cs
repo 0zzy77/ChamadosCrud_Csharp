@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 
 namespace ChamadosCRUD.Controllers
 {
@@ -27,11 +28,31 @@ namespace ChamadosCRUD.Controllers
         {
             if (ModelState.IsValid)
             {
+                var ticket = new Ticket
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    RequesterName = model.RequesterName,
+                    RequesterEmail = model.RequesterEmail,
+                    RequesterPhone = model.RequesterPhone,
+                    LocationId = model.LocationId
+                };
 
+                _context.Add(ticket);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var entry in ModelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Campo: {entry.Key} - Erro: {error.ErrorMessage}");
+                }
             }
 
             ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
-            return View("Views/Home/index.cshtml");
+            return View("~/Views/Home/Index.cshtml", model);
         }
     }
 }
