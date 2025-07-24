@@ -28,6 +28,7 @@
                 <th scope="col">
                     @Html.DisplayNameFor(Model => Model.RoleName)
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +48,18 @@
                         </td>
                         <td scope="row">
                             @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                        <td>
+                            <form method="post" asp-area="" asp-controller="User" asp-action="Delete">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                            <form method="post" asp-area="" asp-controller="User" asp-action="Edit">
+                                <button type="submit" class="btn btn-outline-warning btn-sm">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                            </form>
                         </td>
                         
                     </tr>
