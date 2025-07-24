@@ -37,7 +37,7 @@ namespace ChamadosCRUD.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Roles = new SelectList(_context.Role, "Id", "Name");//Dúvida --> quando utilizar viewBag e quando utilizar as listagens da ViewModel(utilizado nos tickets)
+            ViewBag.Roles = new SelectList(_context.Role, "Id", "Name");//Dúvida --> quando utilizar viewBag e quando utilizar as listagens da ViewModel
             return View();
 
         }

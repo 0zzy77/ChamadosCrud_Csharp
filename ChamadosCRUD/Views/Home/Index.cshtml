@@ -1,48 +1,50 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ChamadosCRUD.Models.Ticket
+@{
+    ViewData["Title"] = "Home";
 }
 
-<!--<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>-->
 <div class="row">
     <h2>Abertura de chamado</h2>
 </div>
 <div class="row">
-    <form>
+    <form asp-controller="Ticket" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label for="title" class="form-label">Título do chamado</label>
-                    <input type="text" class="form-control" id="title">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control">
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label for="requesterPhone" class="form-label">Selecione a unidade com o problema relatado</label>
-                    <select id="locationId" class="form-select form-select-lg mb-3" aria-label="Large select example">
-                        <option selected disabled>Selecione...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <label asp-for="LocationId" class="form-label"></label>
+                    <select asp-for="LocationId" asp-items="ViewBag.Locations" class="form-control">
+                        <option value="">Selecione uma unidade</option>
                     </select>
+                    <span asp-validation-for="LocationId" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Descrição detalhada do problema</label>
-                    <textarea class="form-control" id="description" rows="3"></textarea>
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label for="requesterName" class="form-label">Seu nome</label>
-                    <input type="text" class="form-control" id="requesterName">
+                    <label asp-for="RequesterName" class="form-label"></label>
+                    <input asp-for="RequesterName" class="form-control">
+                    <span asp-validation-for="RequesterName" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label for="requesterEmail" class="form-label">Seu e-mail</label>
-                    <input type="email" class="form-control" id="requesterEmail">
+                    <label asp-for="RequesterEmail" class="form-label"></label>
+                    <input asp-for="RequesterEmail" class="form-control">
+                    <span asp-validation-for="RequesterEmail" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label for="requesterPhone" class="form-label">Seu celular (opcional)</label>
-                    <input type="text" class="form-control" id="requesterPhone">
+                    <label asp-for="RequesterPhone" class="form-label"></label>
+                    <input asp-for="RequesterPhone" class="form-control">
+                    <span asp-validation-for="RequesterPhone" class="text-danger"></span>
                 </div>
             </div>
         </div>

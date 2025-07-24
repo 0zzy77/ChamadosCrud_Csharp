@@ -11,23 +11,19 @@ namespace ChamadosCRUD.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         private readonly ChamadosCRUDContext _context;
 
-        public HomeController(ChamadosCRUDContext context)
+        public HomeController(ChamadosCRUDContext context, ILogger<HomeController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IActionResult Index()
         {
-            ViewBag.Roles = new SelectList(_context.Role, "Id", "Name");
 
-            ViewBag.Location = new SelectList(_context.Location, "Id", "Name");
+            ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
+
             return View();
         }
 
