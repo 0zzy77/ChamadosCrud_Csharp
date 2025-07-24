@@ -20,7 +20,7 @@
                 <div class="mb-3">
                     <label asp-for="LocationId" class="form-label"></label>
                     <select asp-for="LocationId" asp-items="ViewBag.Locations" class="form-control">
-                        <option value="">Selecione uma unidade</option>
+                        <option value="" selected disabled>Selecione uma unidade</option>
                     </select>
                     <span asp-validation-for="LocationId" class="text-danger"></span>
                 </div>
@@ -55,18 +55,25 @@
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
     @section Scripts {
+        <script>
+            $(document).ready(function(){
+                $('#RequesterPhone').mask("(99)999999999");
+            });
+        </script>
+        
 
-    @if (TempData["Success"] != null)
-        {
-            <script>
-                    Swal.fire({
-                    title: 'Sucesso!',
-                    text: '@TempData["Success"]',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                })
-            </script>
-        }
+        @if (TempData["Success"] != null)
+            {
+                <script>
+                        Swal.fire({
+                        title: 'Sucesso!',
+                        text: '@TempData["Success"]',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    })
+                </script>
+            }
+
         
         
     }

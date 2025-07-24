@@ -6,21 +6,33 @@ namespace ChamadosCRUD.Models
     public class Ticket
     {
         public int Id { get; set; }
-        [Required, StringLength(60, MinimumLength = 10), Display(Name = "Título(assunto)")]
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        [StringLength(60, MinimumLength = 10, ErrorMessage = "Mínimo de 10 e máximo de 60 caracteres.")]
+        [Display(Name = "Título(assunto)")]
         public string Title { get; set; }
-        [Required, MinLength(80), Display(Name = "Descrição do Problema")]
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        [MinLength(80, ErrorMessage =" Mínimo de 80 caracteres.")]
+        [Display(Name = "Descrição do Problema")]
         public string Description { get; set; }
-        [Required, StringLength(60, MinimumLength = 5), Display(Name = "Nome")]
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        [StringLength(60, MinimumLength = 10, ErrorMessage = "Mínimo de 5 e máximo de 60 caracteres.")]
+        [Display(Name = "Nome")]
         public string RequesterName { get; set; }
-        [Required, EmailAddress, Display(Name = "E-mail")]
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        [EmailAddress(ErrorMessage = "Formato inválido.")]
+        [Display(Name = "E-mail")]
         public string RequesterEmail { get; set; }
-        [Phone, Display(Name = "Contato")]
+        [Phone(ErrorMessage = "Formato inválido. Exemplo: (99)999999999)")]
+        [MinLength(13, ErrorMessage = "Formato inválido. Exemplo: (99)999999999)")]
+        [Display(Name = "Contato")]
         public string? RequesterPhone { get; set; }
         [DataType(DataType.Date), Display(Name = "Criado em")]
         public DateTime CreatedAt { get; set; }
         [DataType(DataType.Date), Display(Name = "Atualizado em")]
         public DateTime UpdatedAt { get; set; }
-        [Required, Display(Name = "Unidade")]
+        [Required(ErrorMessage = "Campo Obrigatório.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Selecione uma unidade.")]
+        [Display(Name = "Unidade")]
         public int LocationId { get; set; }//Location
         [ForeignKey("LocationId"), Display(Name = "Unidade")]
         public Location? Location { get; set; }
