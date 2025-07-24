@@ -20,7 +20,7 @@ namespace ChamadosCRUD.Models
         public DateTime CreatedAt { get; set; }
         [DataType(DataType.Date), Display(Name = "Atualizado em")]
         public DateTime UpdatedAt { get; set; }
-        [Required]
+        [Required, Display(Name = "Unidade")]
         public int LocationId { get; set; }//Location
         [ForeignKey("LocationId"), Display(Name = "Unidade")]
         public Location? Location { get; set; }

@@ -17,9 +17,15 @@ namespace ChamadosCRUD.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var tickets = await _context.Tickets
+                .Include(t => t.Location)
+                .Include(t => t.Status)
+                .Include(t => t.AssignedTo)
+                .ToListAsync();
+
+            return View(tickets);
         }
 
         [HttpPost]

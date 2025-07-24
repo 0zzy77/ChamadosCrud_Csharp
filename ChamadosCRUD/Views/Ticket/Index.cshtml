@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<ChamadosCRUD.Models.Ticket>
 @{
     ViewData["Title"] = "Tickets";
 }
@@ -13,26 +11,32 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Status</th>
-                <th scope="col">Título</th>
-                <th scope="col">Requerente(e-mail)</th>
-                <th scope="col">Unidade</th>
-                <th scope="col">Criado em</th>
-                <th scope="col">Atualizado em</th>
-                <th scope="col">Técnico</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.AssignedTo)</th>
+                <th>@Html.DisplayNameFor(model => model.RequesterName)</th>
+                <th>@Html.DisplayNameFor(model => model.RequesterEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.Location)</th>
+                <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Em andamento</td>
-                <td>titulo exemplo</td>
-                <td>exemplo@gmail.com</td>
-                <td>unidade exemplo</td>
-                <td>01/01/2025</td>
-                <td>01/01/2025</td>
-                <td> - </td>
-            </tr>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Status.Name</td>
+                    <td>@item.Title</td>
+                    <td>@(item.AssignedTo?.Name ?? "--")</td>
+                    <td>@item.RequesterName</td>
+                    <td>@item.RequesterEmail</td>
+                    <td>@item.Location.Name</td>
+                    <td>@item.CreatedAt</td>
+                    <td>@item.UpdatedAt</td>
+                </tr>
+            }
+            
         </tbody>
     </table>
 </div>
