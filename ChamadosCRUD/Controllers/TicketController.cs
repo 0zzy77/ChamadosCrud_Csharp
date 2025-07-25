@@ -62,5 +62,7 @@ namespace ChamadosCRUD.Controllers
             ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
             return View("~/Views/Home/Index.cshtml", model);
         }
+
+        
     }
 }

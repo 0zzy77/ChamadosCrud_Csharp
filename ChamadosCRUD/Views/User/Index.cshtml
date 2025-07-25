@@ -1,6 +1,13 @@
 ﻿@model IEnumerable<ChamadosCRUD.Models.ViewModels.UserViewModel>
+@using System.Security.Claims
 @{
     ViewData["title"] = "Usuários";
+}
+
+@{
+    var userRoleId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.Role));
+ 
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
 <div class="row">
@@ -8,8 +15,10 @@
 </div>
 <div class="row">
     <div class="col-2">
-        <!--<button type="button" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Adicionar</button>-->
-        <a class="btn btn-primary btn-sm" role="button" asp-area="" asp-controller="User" asp-action="Create"><i class="bi bi-plus-circle"></i> Adicionar</a>
+        @if (userRoleId <= 2)
+        {
+            <a class="btn btn-primary btn-sm" role="button" asp-area="" asp-controller="User" asp-action="Create"><i class="bi bi-plus-circle"></i> Adicionar</a>
+        }
     </div>
 </div>
 <div class="row">
@@ -50,18 +59,35 @@
                             @Html.DisplayFor(modelItem => item.RoleName)
                         </td>
                         <td>
-                            <form method="post" asp-area="" asp-controller="User" asp-action="Delete">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
+
+                            @if (userRoleId > 2 || Convert.ToInt32(userId) == item.Id)
+                            {
+                                
+                                <button type="button" class="btn btn-outline-danger btn-sm delete-btn" style="color:gray;border-color:gray;" disabled>
                                     <i class="bi bi-trash"></i>
                                 </button>
-                            </form>
-                            <form method="post" asp-area="" asp-controller="User" asp-action="Edit">
-                                <button type="submit" class="btn btn-outline-warning btn-sm">
+
+
+                                <button type="submit" class="btn btn-outline-warning btn-sm" style="color:gray;border-color:gray;" disabled>
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
-                            </form>
+                                
+                            }
+                            else
+                            {
+                                <form method="post" asp-area="" asp-controller="User" asp-action="Delete" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-outline-danger btn-sm delete-btn">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                                <form method="post" asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-outline-warning btn-sm">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </form>
+                            }
+
                         </td>
-                        
                     </tr>
                 }
             }
@@ -74,4 +100,69 @@
 
         </tbody>
     </table>
+    @section Scripts{
+        <script>
+       
+            $(document).on('click', '.delete-btn', function (e) {
+                e.preventDefault();
+                var form = $(this).closest('form'); 
+
+                Swal.fire({
+                title: 'Tem certeza?',
+                text: 'Essa ação não poderá ser desfeita!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+
+        </script>
+
+        
+        
+
+
+        @if (TempData["Success"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Sucesso!',
+                    text: '@TempData["Success"]',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+
+        @if (TempData["DeletedSuccess"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Sucesso!',
+                    text: '@TempData["DeletedSuccess"]',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+
+        @if (TempData["Unauthorized"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Erro!',
+                    text: '@TempData["Unauthorized"]',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+    }
 </div>
