@@ -102,6 +102,39 @@ namespace ChamadosCRUD.Controllers
             return View(userData);//caso não entre no if por conta de dados inválidos, irá retornar com as mensagens de erro
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            var roles = await _context.Role.ToListAsync();
+
+            UserViewModel userVM = new UserViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                RoleId = user.RoleId,
+                Roles = roles.Select(r => new SelectListItem
+                {
+                    Value = r.Id.ToString(),
+                    Text = r.Name,
+                    Selected = r.Id == user.RoleId
+                }).ToList()
+            };
+
+            return View(userVM);
+        }
+
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {

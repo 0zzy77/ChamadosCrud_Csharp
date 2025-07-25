@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel;
@@ -21,6 +22,8 @@ namespace ChamadosCRUD.Models.ViewModels
         //[BindNever]//pra nao ser incluido no formulario DÚVIDA--->(MESMO ASSIM NÃO FUNCIONAVA, APENAS ACRESCENTANDO ?, DESCOBRIR O PORQUE DEPOIS)
         [Display(Name = "Cargo")]
         public string? RoleName { get; set; }
+
+        public IEnumerable<SelectListItem> Roles { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório!")]
         [Display(Name = "Cargo")]

@@ -1,12 +1,12 @@
 ﻿@model ChamadosCRUD.Models.ViewModels.UserViewModel
 @{
-    ViewData["Title"] = "Cadastro de usuário";
+    ViewData["Title"] = "Edição de usuário";
 }
 <div class="row">
-    <h2>Cadastro de usuários</h2>
+    <h2>Edição de usuários</h2>
 </div>
 <div class="row">
-    
+
     <form asp-controller="User" asp-action="Create" method="post">
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -21,18 +21,13 @@
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <div class="col-6">
-            <label asp-for="Password" class="form-label"></label>
-            <input asp-for="Password" class="form-control">
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <div class="col-6">
             <label asp-for="RoleId" class="form-label"></label>
-            <select asp-for="RoleId" asp-items="ViewBag.Roles" class="form-control">
-                <option value="">Selecione um cargo</option>
+            <select asp-for="RoleId" asp-items="Model.Roles" class="form-control">
+                <option value="" disabled>Selecione um cargo</option>
             </select>
             <span asp-validation-for="RoleId" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="submit" class="btn btn-primary">Salvar alterações</button>
     </form>
 </div>
 
