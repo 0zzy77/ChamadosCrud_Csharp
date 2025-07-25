@@ -22,20 +22,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model)
+            @if(Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Status.Name</td>
+                        <td>@item.Title</td>
+                        <td>@(item.AssignedTo?.Name ?? "--")</td>
+                        <td>@item.RequesterName</td>
+                        <td>@item.RequesterEmail</td>
+                        <td>@item.Location.Name</td>
+                        <td>@item.CreatedAt</td>
+                        <td>@item.UpdatedAt</td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Status.Name</td>
-                    <td>@item.Title</td>
-                    <td>@(item.AssignedTo?.Name ?? "--")</td>
-                    <td>@item.RequesterName</td>
-                    <td>@item.RequesterEmail</td>
-                    <td>@item.Location.Name</td>
-                    <td>@item.CreatedAt</td>
-                    <td>@item.UpdatedAt</td>
+                    <td colspan="9" class="text-center"><h3>Não há dados cadastrados.</h3></td>
                 </tr>
             }
+            
             
         </tbody>
     </table>
