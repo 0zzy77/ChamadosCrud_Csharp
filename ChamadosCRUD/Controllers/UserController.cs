@@ -118,7 +118,7 @@ namespace ChamadosCRUD.Controllers
 
             var roles = await _context.Role.ToListAsync();
 
-            UserViewModel userVM = new UserViewModel
+            UserEditViewModel userVM = new UserEditViewModel
             {
                 Id = user.Id,
                 Name = user.Name,
@@ -133,6 +133,51 @@ namespace ChamadosCRUD.Controllers
             };
 
             return View(userVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Name, Email, RoleId")] UserEditViewModel userVM)
+        {
+
+            foreach (var entry in ModelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Campo: {entry.Key} - Erro: {error.ErrorMessage}");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(userVM);
+            }
+
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.Name = userVM.Name;
+            user.Email = userVM.Email;
+            user.RoleId = userVM.RoleId;
+
+            try
+            {
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                return View(userVM);
+
+            }
+
+
+
+            
         }
 
         [Authorize]
