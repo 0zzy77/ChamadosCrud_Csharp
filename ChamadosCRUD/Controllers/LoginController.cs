@@ -27,6 +27,16 @@ namespace ChamadosCRUD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LoginViewModel model)
         {
+            //debug
+            foreach (var entry in ModelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Campo: {entry.Key} - Erro: {error.ErrorMessage}");
+                }
+            }
+            //debug
+
             if (!ModelState.IsValid)
             {
                 return View(model);

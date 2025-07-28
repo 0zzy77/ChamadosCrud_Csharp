@@ -38,7 +38,7 @@ namespace ChamadosCRUD.Models.ViewModels
      * https://pt.stackoverflow.com/questions/287304/campo-sem-required-est%C3%A1-sendo-obrigat%C3%B3rio-por-qu%C3%AA
      */
 
-    public class UserEditViewModel//criada classe separada pois dava erro no Required do password
+    public class UserEditViewModel //criada classe separada pois dava erro no Required do password
     {
         public int Id { get; set; }
 

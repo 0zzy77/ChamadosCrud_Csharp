@@ -28,6 +28,13 @@ namespace ChamadosCRUD.Controllers
             return View(tickets);
         }
 
+        public async Task<IActionResult> Create()
+        {
+            ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
+
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title, LocationId, Description, RequesterName, RequesterEmail, RequesterPhone")]Ticket model)
@@ -60,7 +67,8 @@ namespace ChamadosCRUD.Controllers
             }
 
             ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
-            return View("~/Views/Home/Index.cshtml", model);
+            //return View("~/Views/Home/Index.cshtml", model);
+            return View(model);
         }
 
         

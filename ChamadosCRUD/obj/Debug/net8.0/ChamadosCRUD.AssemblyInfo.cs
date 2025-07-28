@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChamadosCRUD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c603516f5b03c2f6a0920799e454a50aaea3d483")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+457c36bc5faac2f798b497eb1795b18a4ba68653")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChamadosCRUD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChamadosCRUD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
