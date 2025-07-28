@@ -55,7 +55,7 @@ namespace ChamadosCRUD.Controllers
                 await _context.SaveChangesAsync();
 
                 TempData["Success"] = $"Chamado sob o protocolo {ticket.Id} enviado com sucesso.";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Create", "Ticket");
             }
 
             foreach (var entry in ModelState)
@@ -67,7 +67,7 @@ namespace ChamadosCRUD.Controllers
             }
 
             ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
-            //return View("~/Views/Home/Index.cshtml", model);
+            
             return View(model);
         }
 

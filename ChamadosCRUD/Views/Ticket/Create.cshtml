@@ -119,6 +119,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     
+    <script>
+        $(document).ready(function(){
+            $('#RequesterPhone').mask("(99)999999999");
+        });
+    </script>
+
+
+    @if (TempData["Success"] != null)
+    {
+        <script>
+                Swal.fire({
+                title: 'Sucesso!',
+                text: '@TempData["Success"]',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
+        </script>
+    }
+
 </body>
 </html>
 
