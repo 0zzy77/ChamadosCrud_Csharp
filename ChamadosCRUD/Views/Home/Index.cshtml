@@ -1,66 +1,84 @@
-﻿@model ChamadosCRUD.Models.Ticket
+﻿@model IEnumerable<ChamadosCRUD.Models.Ticket>
+@using System.Security.Claims
 @{
-    ViewData["Title"] = "Home";
+    ViewData["title"] = "Chamados atribuídos";
 }
 
 <div class="row">
-    <h2>Abertura de chamado</h2>
+    <h2>Chamados atribuídos para você</h2>
 </div>
+
 <div class="row">
-    <form asp-controller="Ticket" asp-action="Create" method="post">
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="row">
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="Title" class="form-label"></label>
-                    <input asp-for="Title" class="form-control">
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="LocationId" class="form-label"></label>
-                    <select asp-for="LocationId" asp-items="ViewBag.Locations" class="form-control">
-                        <option value="" selected disabled>Selecione uma unidade</option>
-                    </select>
-                    <span asp-validation-for="LocationId" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Description" class="form-label"></label>
-                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col">
-                <div class="mb-3">
-                    <label asp-for="RequesterName" class="form-label"></label>
-                    <input asp-for="RequesterName" class="form-control">
-                    <span asp-validation-for="RequesterName" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="RequesterEmail" class="form-label"></label>
-                    <input asp-for="RequesterEmail" class="form-control">
-                    <span asp-validation-for="RequesterEmail" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="RequesterPhone" class="form-label"></label>
-                    <input asp-for="RequesterPhone" class="form-control">
-                    <span asp-validation-for="RequesterPhone" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <div class="row"></div>
-       
-        
-    
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-    @section Scripts {
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th>@Html.DisplayNameFor(model => model.Status)</th>
+                <th>@Html.DisplayNameFor(model => model.Title)</th>
+                <th>@Html.DisplayNameFor(model => model.AssignedTo)</th>
+                <th>@Html.DisplayNameFor(model => model.RequesterName)</th>
+                <th>@Html.DisplayNameFor(model => model.RequesterEmail)</th>
+                <th>@Html.DisplayNameFor(model => model.Location)</th>
+                <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Status.Name</td>
+                        <td>@item.Title</td>
+                        <td>@(item.AssignedTo?.Name ?? "--")</td>
+                        <td>@item.RequesterName</td>
+                        <td>@item.RequesterEmail</td>
+                        <td>@item.Location.Name</td>
+                        <td>@item.CreatedAt</td>
+                        <td>@item.UpdatedAt</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="9" class="text-center"><h3>Não há chamados pendentes.</h3></td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+    @section Scripts{
         <script>
-            $(document).ready(function(){
-                $('#RequesterPhone').mask("(99)999999999");
+
+            $(document).on('click', '.delete-btn', function (e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+
+                Swal.fire({
+                title: 'Tem certeza?',
+                text: 'Essa ação não poderá ser desfeita!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sim, excluir!',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
+
         </script>
-        
+
+
+
+
 
         @if (TempData["Success"] != null)
         {
@@ -74,7 +92,28 @@
             </script>
         }
 
-        
-        
+        @if (TempData["DeletedSuccess"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Sucesso!',
+                    text: '@TempData["DeletedSuccess"]',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+
+        @if (TempData["Unauthorized"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Erro!',
+                    text: '@TempData["Unauthorized"]',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
     }
 </div>
