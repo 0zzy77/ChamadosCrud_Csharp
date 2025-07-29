@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Sockets;
+using System.Security.Claims;
+
 
 namespace ChamadosCRUD.Controllers
 {
@@ -71,6 +73,77 @@ namespace ChamadosCRUD.Controllers
             return View(model);
         }
 
-        
+        public async Task<IActionResult> AssignTo(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Ticket ticket = await _context.Tickets.FindAsync(id);
+
+            if(ticket == null)
+            {
+                return NotFound();
+            }
+
+            ticket.AssignedToId = Convert.ToInt32(userId);
+            ticket.UpdatedAt = DateTime.Now.ToUniversalTime();
+
+            try
+            {
+                _context.Update(ticket);
+                await _context.SaveChangesAsync();
+
+                TempData["Assigned"] = "Chamado atribuído com sucesso.";
+
+                //debug model
+                foreach (var entry in ModelState)
+                {
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Campo: {entry.Key} - Erro: {error.ErrorMessage}");
+                    }
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch 
+            {
+                TempData["AssignedError"] = "Ocorreu um erro ao tentar atribuir este chamado.";
+                return View();
+            }
+
+        }
+
+        public async Task<IActionResult> UnassignTo(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Ticket ticket = await _context.Tickets.FindAsync(id);
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            ticket.AssignedToId = null;
+            ticket.UpdatedAt = DateTime.Now.ToUniversalTime();
+
+            try
+            {
+                _context.Update(ticket);
+                await _context.SaveChangesAsync();
+
+                TempData["Assigned"] = "Chamado desatribuído com sucesso.";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                TempData["AssignedError"] = "Ocorreu um erro ao tentar desatribuir este chamado.";
+                return View();
+            }
+
+        }
+
+
     }
 }

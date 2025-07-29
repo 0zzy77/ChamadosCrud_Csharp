@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<ChamadosCRUD.Models.Ticket>
+@using System.Security.Claims;
 @{
-    ViewData["Title"] = "Tickets";
+
+    ViewData["Title"] = "Chamados";
+
+    int userId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+    int userRoleId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.Role));
 }
 
 <div class="row">
@@ -14,11 +19,11 @@
                 <th>@Html.DisplayNameFor(model => model.Status)</th>
                 <th>@Html.DisplayNameFor(model => model.Title)</th>
                 <th>@Html.DisplayNameFor(model => model.AssignedTo)</th>
-                <th>@Html.DisplayNameFor(model => model.RequesterName)</th>
                 <th>@Html.DisplayNameFor(model => model.RequesterEmail)</th>
                 <th>@Html.DisplayNameFor(model => model.Location)</th>
                 <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
                 <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -31,11 +36,47 @@
                         <td>@item.Status.Name</td>
                         <td>@item.Title</td>
                         <td>@(item.AssignedTo?.Name ?? "--")</td>
-                        <td>@item.RequesterName</td>
                         <td>@item.RequesterEmail</td>
                         <td>@item.Location.Name</td>
                         <td>@item.CreatedAt</td>
                         <td>@item.UpdatedAt</td>
+                        <td>
+                            <form method="get" asp-area="" asp-controller="" asp-action="" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-outline-info btn-sm" title="Detalhes do chamado">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                            @if(userRoleId > 2)
+                            {
+                                <form method="get" asp-area="" asp-controller="" asp-action="" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-outline-warning btn-sm" title="Editar chamado">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </form>
+                            }
+                            
+                            @if (item.AssignedTo == null)
+                            {
+                                <form method="get" asp-area="" asp-controller="Ticket" asp-action="AssignTo" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-outline-success btn-sm" title="Atribuir para mim">
+                                        <i class="bi bi-bookmark-plus"></i>
+                                    </button>
+                                </form>
+                            } else if (item.AssignedToId == userId)
+                            {
+                                <form method="get" asp-area="" asp-controller="Ticket" asp-action="UnassignTo" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Desatribuir">
+                                        <i class="bi bi-bookmark-x"></i>
+                                    </button>
+                                </form>
+                            } else if (item.AssignedToId != null && item.AssignedToId != userId)
+                            {
+                                <button type="submit" class="btn btn-outline-secondary btn-sm" disabled title="Já atribuído para outro">
+                                    <i class="bi bi-bookmark-fill"></i>
+                                </button>
+                            }
+
+                        </td>
                     </tr>
                 }
             }
@@ -49,4 +90,29 @@
             
         </tbody>
     </table>
+    @section Scripts{
+        @if (TempData["Assigned"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Sucesso!',
+                    text: '@Html.Raw(TempData["Assigned"])',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+
+        @if (TempData["AssignedError"] != null)
+        {
+            <script>
+                    Swal.fire({
+                    title: 'Erro!',
+                    text: '@TempData["AssignedError"]',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                })
+            </script>
+        }
+    }
 </div>
