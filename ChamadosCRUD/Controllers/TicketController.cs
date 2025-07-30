@@ -144,6 +144,26 @@ namespace ChamadosCRUD.Controllers
 
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            //Ticket ticket = await _context.Tickets.FindAsync(id); //pega o objeto porém não pega as chaves estrangeiras
+
+            Ticket ticket = await _context.Tickets
+                .Include(t => t.Location)
+                .Include(t => t.Status)
+                .Include(t => t.AssignedTo)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+
+            if(ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
+
+        }
+
 
     }
 }

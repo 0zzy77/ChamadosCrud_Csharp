@@ -134,6 +134,7 @@ namespace ChamadosCRUD.Controllers
 
             return View(userVM);
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Name, Email, RoleId")] UserEditViewModel userVM)
         {
