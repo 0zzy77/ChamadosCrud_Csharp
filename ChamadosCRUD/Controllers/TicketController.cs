@@ -1,9 +1,12 @@
 ﻿using ChamadosCRUD.Data;
 using ChamadosCRUD.Models;
+using ChamadosCRUD.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Linq;
 using System.Net.Sockets;
 using System.Security.Claims;
 
@@ -71,6 +74,43 @@ namespace ChamadosCRUD.Controllers
             ViewBag.Locations = new SelectList(_context.Location, "Id", "Name");
             
             return View(model);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            
+            if (id == null)
+                return NotFound();
+
+            Ticket ticket = await _context.Tickets.FindAsync(id);
+
+            if (ticket == null)
+                return NotFound();
+
+            var status = await _context.StatusTickets.ToListAsync();
+            var users = await _context.Users.ToListAsync();
+
+            TicketEditViewModel ticketVM = new TicketEditViewModel
+            {
+                Id = ticket.Id,
+                StatusId = ticket.StatusTicketId,
+                AssignedToId = ticket.AssignedToId,
+                Status = status.Select(s => new SelectListItem
+                {
+                    Value = s.Id.ToString(),
+                    Text = s.Name,
+                    Selected = s.Id == ticket.StatusTicketId
+                }).ToList(),
+                Users = users.Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = u.Name,
+                    Selected = u.Id == ticket.AssignedToId
+                }).ToList()
+
+            };
+
+            return View(ticketVM);
         }
 
         public async Task<IActionResult> AssignTo(int id)

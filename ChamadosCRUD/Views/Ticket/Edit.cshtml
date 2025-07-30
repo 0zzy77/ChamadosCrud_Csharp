@@ -1,0 +1,42 @@
+﻿@model ChamadosCRUD.Models.ViewModels.TicketEditViewModel
+@{
+    ViewData["Title"] = "Edição de chamado";
+}
+
+<div class="row">
+    <h2>Edição de Chamado</h2>
+</div>
+<div class="row">
+
+    <form asp-controller="Ticket" asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="row">
+            <div class="col mb-3">
+                <label asp-for="StatusId" class="form-label"></label>
+                <select asp-for="StatusId" asp-items="Model.Status" class="form-control">
+                    <option value="" disabled>Selecione um Status</option>
+                </select>
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col mb-3">
+                <label asp-for="AssignedToId" class="form-label"></label>
+                <select asp-for="AssignedToId" asp-items="Model.Users" class="form-control">
+                    <option value="" disabled>Selecione um Usuário</option>
+                </select>
+                <span asp-validation-for="AssignedToId" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col mb-3">
+                <button type="submit" class="btn btn-primary">Salvar alterações</button>
+            </div>
+        </div>
+        
+    </form>
+</div>
